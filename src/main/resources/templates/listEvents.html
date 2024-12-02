@@ -46,6 +46,18 @@
             </form>
         </div>
 
+        <div>
+            <form th:action='@{/events/searchByLocation}' th:method="POST">
+                <label for="searchByLocation">Search By Location</label>
+                <select id="searchByLocation" name="searchByLocation">
+                    <option value="">Select a Location</option>
+                    <option th:each="loc : ${locations}" th:value="${loc.id}" th:text="${loc.address}"></option>
+                </select>
+                <br/>
+                <input type="submit" class="btn btn-primary" value="Search">
+            </form>
+        </div>
+
         <h2 class="mb-4">Choose an Event:</h2>
         <!-- Display radio buttons for each event -->
         <form th:action='@{/eventBooking/book}' th:method="POST">

@@ -18,6 +18,8 @@ public interface EventService {
 
     List<Event> searchByCategory(String category);
 
+    List<Event> searchByLocation(String address);
+
     Optional<Event> save(String name, String description, double popularityScore, Long categoryId, Long locationId);
 
     void deleteById(Long id);

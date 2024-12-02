@@ -53,6 +53,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> searchByLocation(String address) {
+        return eventRepository.findEventByLocation(address);
+    }
+
+    @Override
     public Optional<Event> save(String name, String description, double popularityScore, Long categoryId, Long locationId) {
         // Валидација на Category
         Category category = categoryRepository.findById(categoryId)

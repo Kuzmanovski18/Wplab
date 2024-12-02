@@ -41,6 +41,7 @@ public class EventController {
     public String getEventsPage(@RequestParam(required = false) String error,
                                 @RequestParam(required = false) String search,
                                 @RequestParam(required = false) String searchByCategory,
+                                @RequestParam(required = false) String searchByLocation,
                                 Model model) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
@@ -49,10 +50,13 @@ public class EventController {
             model.addAttribute("events", eventService.searchEvents(search));
         } else if (searchByCategory != null) {
             model.addAttribute("events", eventService.searchByCategory(searchByCategory));
+        }   else if (searchByLocation != null) {
+                model.addAttribute("events", eventService.searchByLocation(searchByLocation));
         } else {
             model.addAttribute("events", eventService.listAll());
         }
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("locations", locationService.findAll());
         return "listEvents";
     }
 
@@ -127,9 +131,18 @@ public class EventController {
 
     @PostMapping("/searchByCategory")
     public String getSearchedByCategoryEvents(@RequestParam Long searchByCategory) {
-        if (categoryService.findById(searchByCategory).isPresent()) {
-            Category category = categoryService.findById(searchByCategory).get();
+        if (categoryRepository.findById(searchByCategory).isPresent()) {
+            Category category = categoryRepository.findById(searchByCategory).get();
             return "redirect:/events?searchByCategory=" + category.getCategory();
+        }
+        return "redirect:/events";
+    }
+
+    @PostMapping("/searchByLocation")
+    public String getSearchedByLocationEvents(@RequestParam Long searchByLocation) {
+        if (locationRepository.findById(searchByLocation).isPresent()) {
+            Location location = locationRepository.findById(searchByLocation).get();
+            return "redirect:/events?searchByLocation=" + location.getAddress();
         }
         return "redirect:/events";
     }

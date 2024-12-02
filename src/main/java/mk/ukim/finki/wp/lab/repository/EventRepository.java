@@ -68,4 +68,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e FROM Event e WHERE e.category.category = :category")
     List<Event> findEventByCategory(String category);
 
+    @Query("SELECT e FROM Event e WHERE e.location.address = :address")
+    List<Event> findEventByLocation(String address);
+
 }
