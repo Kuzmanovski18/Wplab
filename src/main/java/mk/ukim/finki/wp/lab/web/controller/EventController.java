@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/events")
+@RequestMapping(path = {"/", "", "/events"})
 public class EventController {
 
     private final EventService eventService;

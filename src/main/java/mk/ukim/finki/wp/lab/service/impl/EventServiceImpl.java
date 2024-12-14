@@ -59,16 +59,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Optional<Event> save(String name, String description, double popularityScore, Long categoryId, Long locationId) {
-        // Валидација на Category
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
 
-        // Валидација на Location
         Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new LocationNotFoundException(locationId));
 
         Event event = new Event(name, description, popularityScore, category, location);
-        // Чување на настан
         return Optional.of(this.eventRepository.save(event));
     }
 
